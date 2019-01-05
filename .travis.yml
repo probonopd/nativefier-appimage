@@ -17,14 +17,14 @@ script:
     cat > usr/share/applications/notecad.desktop <<EOF
     [Desktop Entry]
     Type=Application
-    Name=FreeCAD
+    Name=NoteCAD
     Comment=CAD application
-    Icon=freecad
+    Icon=notecad
     Exec=AppRun
     Categories=Graphics;3D;
     EOF
   - mkdir -p usr/share/icons/hicolor/scalable/
-  - touch usr/share/icons/hicolor/scalable/freecad.svg
+  - touch usr/share/icons/hicolor/scalable/notecad.svg
   - cd -
   - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
   - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
@@ -34,7 +34,7 @@ script:
 after_success:
   - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-  - bash upload.sh APPNAME*.AppImage*
+  - bash upload.sh NoteCAD*.AppImage*
   
 branches:
   except:
