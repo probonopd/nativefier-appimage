@@ -9,4 +9,4 @@ before_install:
 
 script:
   - nativefier --name "NoteCAD" "https://notecad.xyz"
-  - ls -lisa
+  - find *-linux-x64
