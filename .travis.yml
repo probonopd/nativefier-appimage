@@ -8,7 +8,7 @@ before_install:
   - npm install nativefier -g
 
 script:
-  - nativefier --name "NoteCAD" "https://notecad.xyz"
+  - nativefier --name "NoteCAD" "http://notecad.xyz"
   - mv *-linux-x64/ appdir
   - cd appdir/
   - mkdir -p usr/bin ; mv * usr/bin/ || true
