@@ -21,7 +21,7 @@ script:
     Comment=CAD application
     Icon=notecad
     Exec=note-cad
-    Categories=Graphics;3D;
+    Categories=Graphics;3DGraphics;
     EOF
   - mkdir -p usr/share/icons/hicolor/scalable/
   - touch usr/share/icons/hicolor/scalable/notecad.svg
