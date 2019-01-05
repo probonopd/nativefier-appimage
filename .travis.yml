@@ -1,0 +1,12 @@
+os:
+  - linux
+language: node_js
+node_js:
+  - "6"
+
+before_install:
+  - npm install nativefier -g
+
+script:
+  - nativefier --name "NoteCAD" "https://notecad.xyz"
+  - ls -lisa
