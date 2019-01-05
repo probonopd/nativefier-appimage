@@ -9,4 +9,32 @@ before_install:
 
 script:
   - nativefier --name "NoteCAD" "https://notecad.xyz"
-  - find *-linux-x64
+  - mv *-linux-x64/ appdir
+  - cd appdir/
+  - ln -s note-cad AppRun
+  - mkdir -p usr/share/applications/
+  - |
+    cat > usr/share/applications/notecad.desktop <<EOF
+    [Desktop Entry]
+    Type=Application
+    Name=FreeCAD
+    Comment=CAD application
+    Icon=freecad
+    Exec=AppRun
+    Categories=Graphics;3D;
+    EOF
+  - mkdir -p usr/share/icons/hicolor/scalable/
+  - touch usr/share/icons/hicolor/scalable/freecad.svg
+  - cd -
+  - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+  - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+
+after_success:
+  - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh APPNAME*.AppImage*
+  
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)/
